@@ -1,5 +1,6 @@
 # Real-Time Credit Card Transactions Analysis
 
+<img src="./img/dashboard.png">
 
 ## Overview
 
@@ -109,10 +110,7 @@ $  docker-compose down -v   # for complete clean up
 ```
 
 
-## The Dashboard
-The final dashboard is depicted in the following figure:
-
-<img src="./img/dashboard.png">
+## Dashboard Description
 
 On the first row are reported some numerical information:
 * Total Spent Amount: Represent the total amount of all transactions, useful for understanding the volume of money moving over time.
