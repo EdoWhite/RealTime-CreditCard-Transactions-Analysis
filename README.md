@@ -70,7 +70,7 @@ $ conda activate kafka-env
 * The second operation to be performed is to start the Docker composer, which will take care of loading the components needed by the application. Also this operation is done from the CLI, with the following command:
 
 ```bash
-(kafka-env) $ docker compose up
+(kafka-env) $ docker-compose up
 ```
 
 * Next, we have to launch the producer, which is in charge of transforming the transactions file into a data stream that is sent to Kafka. It is possible to specify how fast the data is forwarded to Kafka with the `speed` attribute: if set to "1" (default) the transactions will be issued respecting the timestamp attached to them, with higher values, the emission speed will increase. Useful option in debugging to see graphs updating very often. Another option that can be applied regards the Kafka server Bootstrap Server setting (default: *localhost:29092*).
