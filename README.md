@@ -62,7 +62,6 @@ This application was developed and tested is osx-arm64 and it may be necessary t
 
 This operation can be done from the Command Line Interface (CLI) with the following command:
 ```bash
-$ cd PROJECT/
 $ conda create --name kafka-env --file conda_env.txt
 $ conda activate kafka-env
 ```
@@ -70,7 +69,7 @@ $ conda activate kafka-env
 * The second operation to be performed is to start the Docker composer, which will take care of loading the components needed by the application. Also this operation is done from the CLI, with the following command:
 
 ```bash
-(kafka-env) $ cd PROJECT/
+# navigate to the cloned folder
 (kafka-env) $ docker compose up
 ```
 
@@ -78,25 +77,25 @@ $ conda activate kafka-env
 
 Start the producer from the CLI using:
 ```bash
-(kafka-env) $ cd PROJECT/bin/
+(kafka-env) $ cd bin/
 (kafka-env) $ python producer.py
 ```
 
 Start the producer at faster speed:
 ```bash
-  (kafka-env) $ cd PROJECT/bin/
+  (kafka-env) $ cd bin/
   (kafka-env) $ python producer.py --speed 10
 ```
 
 Start the producer with a specific Bootstrap Server:
 ```bash
-  (kafka-env) $ cd PROJECT/bin/
+  (kafka-env) $ cd bin/
   (kafka-env) $ python producer.py --boostrap-server localhost:29092
 ```
 
 The processor must be started via CLI, using the command:
 ```bash
-  (kafka-env) $ cd PROJECT/bin/
+  (kafka-env) $ cd bin/
   (kafka-env) $ python processor.py
 ```
 
