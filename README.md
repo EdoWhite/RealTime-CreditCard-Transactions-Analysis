@@ -22,7 +22,7 @@ As reported by the creator of the dataset, transactions have been generated acro
 
 The dataset in question is presented in CSV format and can be found on kaggle. This dataset contains more than one million transactions records with related information. The original version of the data contains several attributes, but only a few will be considered for the purpose of the project. In particular, the attributes that will be considered are:
 
-1. ID
+1. ID of the transaction
 2. Category of the transaction
 3. Amount of the trasaction
 4. Gender of the credit card holder
