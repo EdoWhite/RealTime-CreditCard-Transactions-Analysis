@@ -1,0 +1,661 @@
+<!-- MAIN DASHBOARD PAGE, used to propose results to the final user -->
+<!doctype html>
+<html>
+<head>
+    <title>Real-Time Transactions</title>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<!-- BODY START -->
+<body style="background-color: #100C2A;">
+
+    <!-- NAVBAR START -->
+    <nav class="navbar navbar-expand-lg bg-dark text-center">
+        <div class="container-fluid">
+            <a class="navbar-brand text-center text-light" href="#" style="padding-left: 10px;">Real-Time Credit Cards Transactions Data</a>
+            <a class="navbar-brand text-right text-light" href="#" style="padding-left: 10px;" id="lastUpdate">Last Update: </a>
+        </div>
+    </nav>
+    </br>
+    <!-- NAVBAR END -->
+
+    <!-- 4 BADGES AT THE TOP -->
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <div class="container-fluid py-4">
+            <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                <!-- BADGE 1 - total spent amount -->
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card bg-info" style="border-radius: 15px;">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Spent Amount</p>
+                                        <h5 class="font-weight-bolder mb-0" id="totalAmount">
+                                            
+                                            <span class="text-success text-sm font-weight-bolder"></span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BADGE 2 - Total number of transactions -->
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card bg-primary" style="border-radius: 15px;">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold text-light">Total Number of Transactions</p>
+                                        <h5 class="font-weight-bolder mb-0 text-light" id="totalTrans">
+                                            
+                                            <span class="text-danger text-sm font-weight-bolder"></span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BADGE 3 - Minimum spent amount -->
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card bg-success" style="border-radius: 15px;">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold text-light">Minimum Spent Amount</p>
+                                        <h5 class="font-weight-bolder mb-0 text-light" id="minAmount">
+                                            
+                                            <span class="text-danger text-sm font-weight-bolder"></span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BADGE 4 - Maximum spent amount -->
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card bg-warning" style="border-radius: 15px;">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Maximum Spent Amount</p>
+                                        <h5 class="font-weight-bolder mb-0" id="maxAmount">
+                                            
+                                            <span class="text-danger text-sm font-weight-bolder"></span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+    <!-- END OF BADGE SECTION -->
+
+    <!-- DASHBOARD START -->
+    <div class="container-fluid">
+        <!-- FIRST ROW -->
+        <div class="row" style="padding: 10px;">
+            <!-- First card - First plot -->
+            <div class="card text-bg-light mb-3 col" style="margin-left: 10px;margin-right: 10px; border-radius: 30px;">
+                <div class="card-body">
+                    <div id="transPerCat" style="height:400px;"></div>
+                </div>
+            </div>
+            <!-- Second card - Second plot -->
+            <div class="card text-bg-light mb-3 col" style="margin-left: 10px;margin-right: 10px; border-radius: 30px;">
+                <div class="card-body">
+                    <div id="transPerGender" style="height:400px;"></div>
+                </div>
+            </div>
+            <!-- Third card - Third plot -->
+            <div class="card text-bg-light mb-3 col" style="margin-left: 10px;margin-right: 10px; border-radius: 30px;">
+                <div class="card-body">
+                    <div id="transPerCity" style="height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECOND ROW -->
+        <div class="row" style="padding: 10px;">
+            <!-- First card - First plot -->
+            <div class="card text-bg-light mb-3 col" style="margin-left: 10px;margin-right: 10px; border-radius: 30px;">
+                <div class="card-body">
+                    <div id="avgPerCat" style="height:400px;"></div>
+                </div>
+            </div>
+            <!-- Second card - Second plot -->
+            <div class="card text-bg-light mb-3 col" style="margin-left: 10px;margin-right: 10px; border-radius: 30px;">
+                <div class="card-body">
+                    <div id="transLastMin" style="height:400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DASHBOARD END -->
+
+
+    <!-- SCRIPT SECTION -->
+    <script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
+    <script src="https://unpkg.com/rxjs@7.5.5/dist/bundles/rxjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        // Import RxJS stuffs
+        const { interval } = rxjs;
+        const { tap, map, scan, windowTime, takeLast, mergeAll, bufferTime, filter } = rxjs.operators;
+        const { webSocket } = rxjs.webSocket;
+
+        const clientId = uuidv4();
+
+        // ----------- DESCRIPTION OF ALL THE VISUALIZATION IN THE DASHBOARD ------------
+
+        // TOTAL NUMBER OF TRANSACTIONS IN THE LAST MINUTE
+        const transLastMin = echarts.init(document.getElementById("transLastMin"), 'light');
+        transLastMin.setOption({
+            title: {
+                text: "Total Number of Transaction per Category, Last Minute",
+                left: "center"
+            },
+            color :{
+                0: "#FBB02D"
+            },
+            tooltip: { trigger: 'axis' },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [{
+                type: 'category',
+                data: [],
+                axisLabel: {
+                    show: true,
+                    interval: 0,
+                    rotate: 45
+                }
+            }],
+            yAxis: [{
+                type: 'value'
+            }],
+            series: [
+                {
+                    name: 'Transactions:',
+                    color: "#FBB02D",
+                    type: 'line',
+                    stack: 'Total',
+                    areaStyle: {},
+                    data: []
+                },
+            ]
+        });
+
+        //AVERAGE AMOUNT PER CATEGORY - LINE CHART
+        const avgPerCat = echarts.init(document.getElementById("avgPerCat"), 'light');
+        avgPerCat.setOption({
+            title: {
+                text: 'Average Transactions Amount per Category',
+                left: 'center'
+            },
+            tooltip: { trigger: 'item' },
+            xAxis: {
+                type: 'category',
+                data: [],
+                axisLabel: {
+                    show: true,
+                    interval: 0,
+                    rotate: 45
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: [],
+                    type: 'line',
+                    label: {
+                        show: true,
+                        position: 'bottom'
+                    }
+                }
+            ]
+        })
+
+        // TRANSACTIONS PER CITY - BAR CHART
+        const transPerCity = echarts.init(document.getElementById("transPerCity"), 'light');
+        transPerCity.setOption({
+            title: {
+                text: 'Top 10 Cities for Number of Transactions',
+                left: 'center'
+            },
+            tooltip: { trigger: 'item' },
+            xAxis: {
+                type: 'category',
+                data: [],
+                inverse: true,
+                animationDuration: 3000000000,
+                animationDurationUpdate: 100,
+                max: 9,
+                axisLabel: {
+                    show: true,
+                    interval: 0,
+                    rotate: 45
+                }
+            },
+            yAxis: {
+                max: 'dataMax'
+            },
+            series: [
+                {
+                    realtimeSort: true,
+                    name: 'transactions',
+                    type: 'bar',
+                    data: [],
+                    label: {
+                        show: false,
+                        position: 'right',
+                        valueAnimation: true
+                    }
+                }
+            ],
+            legend: {
+                show: false
+            },
+            animationDuration: 3000000000,
+            animationDurationUpdate: 100,
+            animationEasing: 'linear',
+            animationEasingUpdate: 'linear'
+        });
+
+        // TRANSACTIONS PER CATEGORY - TREE PLOT
+        const transPerCat = echarts.init(document.getElementById("transPerCat"), 'light');
+        transPerCat.setOption({
+            color: [
+                "#e01f54",
+                "#001852",
+                "#f5e8c8",
+                "#b8d2c7",
+                "#c6b38e",
+                "#a4d8c2",
+                "#f3d999",
+                "#d3758f",
+                "#dcc392",
+                "#2e4783",
+                "#82b6e9",
+                "#ff6347",
+                "#a092f1",
+                "#0a915d",
+                "#eaf889",
+                "#6699FF",
+                "#ff6666",
+                "#3cb371",
+                "#d5b158",
+                "#38b6b6"
+            ],
+            title: {
+                text: 'Number of Transactions per Category',
+                left: 'center'
+            },
+            tooltip: { trigger: 'item' },
+            series: [
+                {
+                    type: 'treemap',
+                    data: [
+                    ]
+                }
+            ]
+
+        })
+
+        // TRANSACTIONS PER GENDER - BAR CHART
+        const transPerGender = echarts.init(document.getElementById("transPerGender"), 'light');
+        transPerGender.setOption({
+            color: [
+                "#c12e34",
+                "#e6b600",
+                "#0098d9",
+                "#2b821d",
+                "#005eaa",
+                "#339ca8",
+                "#cda819",
+                "#32a487"
+            ],
+            title: {
+                text: 'Number of Transactions per Gender',
+                left: 'center'
+            },
+            tooltip: { trigger: 'item' },
+            xAxis: {
+                type: 'value'
+            },
+            yAxis: {
+                type: 'category',
+                data: ['Female', 'Male']
+
+            },
+            series: [
+                {
+                    data: [
+                    ],
+                    type: 'bar'
+                }
+            ]
+        })
+
+        // TOTAL AMOUNT BADGE
+        const totalAmount = document.getElementById("totalAmount")
+
+        // TOTAL TRANSACTIONS NUM BADGE
+        const totalTrans = document.getElementById("totalTrans")
+
+        // MIN AMOUNT BADGE
+        const minAmount = document.getElementById("minAmount")
+
+        // MAX AMOUNT BADGE
+        const maxAmount = document.getElementById("maxAmount")
+
+
+        // ----------- WEBSOCKET DEFINITION ------------
+
+        // SOCKET MAX SPENT AMOUNT
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=max_amount&clientId=${clientId}_max_amount&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value), 
+            scan((values, item) => { values[item.max_amount] = item.max_amount; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push({ name: key, value: values[key] });
+                }
+                list.sort(function (e1, e2) {
+                    return e1.value - e2.value;
+                });
+                list = list.slice(-1)
+                temp = list[0].value
+                maxAmount.innerHTML = "$ " + temp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                lastUpdate.innerHTML = "Last update: " + (new Date()).toLocaleString()
+            },
+            error: e => { console.log(e) }
+        });
+
+
+       // SOCKET MIN SPENT AMOUNT
+       webSocket({
+            url: `ws://localhost:28078/socket/out?topic=min_amount&clientId=${clientId}_min_amount&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value), 
+            scan((values, item) => { values[item.min_amount] = item.min_amount; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push({ name: key, value: values[key] });
+                }
+                list.sort(function (e1, e2) {
+                    return e1.value - e2.value;
+                });
+                list = list.slice(-1)
+                temp = list[0].value
+                minAmount.innerHTML = "$ " + temp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            },
+            error: e => { console.log(e) }
+        });
+
+        // SOCKET TOTAL TRANS NUMBER
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=total_trans_number&clientId=${clientId}_total_trans_number&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value), 
+            scan((values, item) => { values[item.tot_trans] = item.tot_trans; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push({ name: key, value: values[key] });
+                }
+                list.sort(function (e1, e2) {
+                    return e1.value - e2.value;
+                });
+                list = list.slice(-1)
+                temp = list[0].value
+                totalTrans.innerHTML = "# " + temp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            },
+            error: e => { console.log(e) }
+        });
+
+        // SOCKET TOTAL TRANS AMOUNT
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=total_trans_amount&clientId=${clientId}_total_trans_amount&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value),  
+            scan((values, item) => { values[item.tot_amount] = item.tot_amount; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push({ name: key, value: values[key] });
+                }
+                list.sort(function (e1, e2) {
+                    return e1.value - e2.value;
+                });
+                list = list.slice(-1)
+                temp = list[0].value
+                totalAmount.innerHTML = "$ " + temp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        },
+error: e => { console.log(e) }
+});
+
+        // SOCKET TRANS LAST MINUTE
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=trans_last_minute&clientId=${clientId}_trans_last_minute&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value),  
+            scan((values, item) => { values[item.category] = { amount: item.amount, category: item.category, transactions: item.transactions, date: item.start }; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push(values[key]);
+                }
+                list.sort(function (e1, e2) {
+                    return e2.value - e1.value;
+                });
+                date = []
+                category = []
+                trs = []
+                for (e of list) {
+                    category.push(e.category);
+                    trs.push(e.transactions)
+                    date.push(e.date);
+                }
+                transLastMin.setOption({
+                    title: { subtext: "last update: " + (new Date()).toLocaleString() },
+                    xAxis: {
+                        data: category
+                    },
+                    series: [
+                        {
+                            data: trs
+                        }
+                    ]
+                });
+            },
+            error: e => { console.log(e) }
+        });
+
+
+        // SOCKET AVG AMOUNT PER CATEGORY
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=avg_amount_cat&clientId=${clientId}_avg_amount_cat&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value), 
+            scan((values, item) => { values[item.category] = { amount: item.amount, category: item.category }; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push(values[key]);
+                }
+                list.sort(function (e1, e2) {
+                    return e2.value - e1.value;
+                });
+                category = []
+                amount = []
+                for (e of list) {
+                    category.push(e.category);
+                    amount.push(e.amount);
+                }
+                avgPerCat.setOption({
+                    xAxis: { data: category },
+                    series: [{ data: amount }]
+                });
+            },
+            error: e => { console.log(e) }
+        });
+
+        // SOCKET - TRANSACTIONS PER CITY
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=trans_per_city&clientId=${clientId}_trans_per_city&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value), 
+            scan((values, item) => { values[item.city] = { transactions: item.transactions, city: item.city }; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push(values[key]);
+                }
+                list.sort(function (e1, e2) {
+                    return e2.value - e1.value;
+                });
+                city = []
+                transactions = []
+                for (e of list) {
+                    city.push(e.city);
+                    transactions.push(e.transactions);
+                }
+                transPerCity.setOption({
+                    xAxis: { data: city },
+                    series: [{ data: transactions }]
+                });
+            },
+            error: e => { console.log(e) }
+        });
+
+        // SOCKET TRANSACTIONS PER CATEGORY
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=trans_per_cat&clientId=${clientId}_trans_per_cat&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value),
+            scan((values, item) => { values[item.category] = item.transactions; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push({ name: key, value: values[key] });
+                }
+                list.sort(function (e1, e2) {
+                    return e2.value - e1.value;
+                });
+                transPerCat.setOption({
+                    series: [{ data: list }]
+                });
+            },
+            error: e => { console.log(e) }
+        });
+
+        // SOCKET TRANSACTION PER GENDER
+        webSocket({
+            url: `ws://localhost:28078/socket/out?topic=trans_per_gender&clientId=${clientId}_trans_per_gender&valType=json&autoCommit=false`,
+            deserializer: msg => msg
+        }).pipe(
+            map(i => JSON.parse(i.data).value.value),
+            scan((values, item) => { values[item.gender] = item.transactions; return values; }, {}),
+            windowTime(3000, 3000, 1),
+            mergeAll()
+        ).subscribe({
+            next: values => {
+                list = [];
+                for (key in values) {
+                    list.push({ name: key, value: values[key] });
+                }
+                list.sort(function (e1, e2) {
+                    return e2.value - e1.value;
+                });
+                transPerGender.setOption({
+                    series: [{ data: list }]
+                });
+            },
+            error: e => { console.log(e) }
+        });
+
+    </script>
+</body>
+
+</html>

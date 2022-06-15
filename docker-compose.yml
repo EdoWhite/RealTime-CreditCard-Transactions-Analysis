@@ -1,0 +1,90 @@
+version: '3.4'
+services:
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    ports:
+      - '${PORT_ZOOKEEPER:-2181}:2181'
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
+      - zookeeper-logs:/var/lib/zookeeper/log
+      - zookeeper-secrets:/etc/zookeeper/secrets
+    environment:
+      ZOOKEEPER_CLIENT_PORT: '2181'
+      ZOOKEEPER_TICK_TIME: '2000'
+      ZOOKEEPER_LOG4J_ROOT_LOGLEVEL: 'WARN'
+
+  broker1:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker1
+    depends_on:
+      - zookeeper
+    ports:
+      - '${PORT_BROKER1:-29092}:29092'
+    volumes:
+      - broker1-data:/var/lib/kafka/data
+      - broker1-secrets:/etc/kafka/secrets
+    environment:
+      KAFKA_BROKER_ID: '1'
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENERS: 'INTERNAL://broker1:9092,EXTERNAL://broker1:29092'
+      KAFKA_ADVERTISED_LISTENERS: 'INTERNAL://broker1:9092,EXTERNAL://localhost:${PORT_BROKER1:-29092}'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'INTERNAL'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '1'
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: '1'
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: '1'
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: '1'
+      KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: '60000'  # check whether to delete log segments ever minute (default 5 minutes)
+      KAFKA_LOG4J_ROOT_LOGLEVEL: 'WARN'
+      KAFKA_LOG4J_LOGGERS: "\
+        kafka=WARN,\
+        kafka.controller=WARN,\
+        kafka.log.LogCleaner=WARN,\
+        state.change.logger=WARN,\
+        kafka.producer.async.DefaultEventHandler=WARN"
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:0.3.3
+    container_name: kafka-ui
+    depends_on:
+      - zookeeper
+      - broker1
+    ports:
+      - '${PORT_KAFKA_UI:-28080}:8080'
+    environment:
+      KAFKA_CLUSTERS_0_NAME: 'cluster1'
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'broker1:9092'
+      KAFKA_CLUSTERS_0_ZOOKEEPER: 'zookeeper:2181'
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: connect1
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://connect1:8083
+      LOGGING_LEVEL_ROOT: 'ERROR'
+      LOGGING_LEVEL_COM_PROVECTUS: 'ERROR'
+
+  ws-proxy:
+    image: kpmeen/kafka-websocket-proxy:1.1.1
+    container_name: ws-proxy
+    depends_on:
+      - broker1
+    ports:
+      - '${PORT_WS_PROXY:-28078}:8078'
+    environment:
+      WSPROXY_PORT: '8078'
+      WSPROXY_KAFKA_BOOTSTRAP_HOSTS: 'broker1:9092'
+      WSPROXY_SESSION_STATE_TOPIC: '_wsproxy.session.state'
+      WSPROXY_SESSION_STATE_REPLICATION_FACTOR: '1'
+      WS_PROXY_APP_LOG_LEVEL: 'WARN'
+      # more info at: https://kpmeen.gitlab.io/kafka-websocket-proxy/
+
+
+volumes:
+  zookeeper-data:
+  zookeeper-logs:
+  zookeeper-secrets:
+  broker1-data:
+  broker1-secrets:
+  connect-plugins:
+  # note: technically it's not required to define and mount the above volumes, but in that
+  # case Docker Compose will create anonymous volumes with unreadable identifiers, and it
+  # will not be much clear what container is using what volume (unless using docker inspect)
