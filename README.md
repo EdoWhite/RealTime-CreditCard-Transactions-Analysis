@@ -113,20 +113,20 @@ $  docker-compose down -v   # for complete clean up
 ## Dashboard Description
 
 On the first row are reported some numerical information:
-* Total Spent Amount: Represent the total amount of all transactions, useful for understanding the volume of money moving over time.
-* Total Number of Transactions: Represents the total number of transactions over time, which is useful for understanding the volume of transactions in terms of the amount of payments.
-* Minimum Spent Amount: Represent the minimum amount spent by a person.
-* Maximum Spent Amount: Represent the maximum amount spent by a person.
+* **Total Spent Amount**: Represent the total amount of all transactions, useful for understanding the volume of money moving over time.
+* **Total Number of Transactions**: Represents the total number of transactions over time, which is useful for understanding the volume of transactions in terms of the amount of payments.
+* **Minimum Spent Amount**: Represent the minimum amount spent by a person.
+* **Maximum Spent Amount**: Represent the maximum amount spent by a person.
 The last two numerical information can be useful in order to define a sort of threshold regarding the amount of a transaction.
 
 On the second row there are three visualizations, specifically:
-* Number of Transactions per Category: Useful to understand in which categories people tend to buy most frequently.
-* Number of Transactions per Gender: Useful to understand who is more likely to spend, among men and women, note that no age groups are considered.
-* Top 10 Cities for Number of Transactions: This visualization shows the cities where most electronic transactions take place. It can be an indicator of how inclined merchants and customers are to use electronic means of payment.
+* **Number of Transactions per Category**: Useful to understand in which categories people tend to buy most frequently.
+* **Number of Transactions per Gender**: Useful to understand who is more likely to spend, among men and women, note that no age groups are considered.
+* **Top 10 Cities for Number of Transactions**: This visualization shows the cities where most electronic transactions take place. It can be an indicator of how inclined merchants and customers are to use electronic means of payment.
 
 On the third and last row there are instead only two visualizations, in detail:
-* Average Transactions Amount per Category: Useful for understanding in which categories people tend to spend more money.
-* Total Number of Transactions per Category, Last Minute: Interesting to look at the number of transactions happening in a fixed time slot, could be also interesting to fix a different time slot, for example a day, and see how the value changes. This query make use of a sliding window of length 1 minute and sliding interval of 5 seconds.
+* **Average Transactions Amount per Category**: Useful for understanding in which categories people tend to spend more money.
+* **Total Number of Transactions per Category, Last Minute**: Interesting to look at the number of transactions happening in a fixed time slot, could be also interesting to fix a different time slot, for example a day, and see how the value changes. This query make use of a sliding window of length 1 minute and sliding interval of 5 seconds.
 
 
 ## REFERENCES & Links
