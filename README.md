@@ -58,10 +58,11 @@ In order to simulate a real-time stream of data we make use of a custom Python f
 
 This application was developed and tested is osx-arm64 and it may be necessary to install / remove additional libraries to make the application work on other platforms.
 
-* The first step is to make sure to have all the requisites necessary to use the application. To simplify this operation we can create a new virtual environment and install the required libraries. The `conda_env.txt` file contains all the required libraries in a format that is ready to install in an Anaconda Virtual Environment. Check also that JAVA_HOME points to a Java 8 to 11 JRE/JDK (a custom JAVA_HOME variable can be set inside the conda environment, if necessary)
+* The first step is to clone this repository and make sure to have all the requisites necessary to use the application. To simplify this operation we can create a new virtual environment and install the required libraries. The `conda_env.txt` file contains all the required libraries in a format that is ready to install in an Anaconda Virtual Environment. Check also that JAVA_HOME points to a Java 8 to 11 JRE/JDK (a custom JAVA_HOME variable can be set inside the conda environment, if necessary)
 
 This operation can be done from the Command Line Interface (CLI) with the following command:
 ```bash
+# navigate to the cloned folder
 $ conda create --name kafka-env --file conda_env.txt
 $ conda activate kafka-env
 ```
@@ -69,7 +70,6 @@ $ conda activate kafka-env
 * The second operation to be performed is to start the Docker composer, which will take care of loading the components needed by the application. Also this operation is done from the CLI, with the following command:
 
 ```bash
-# navigate to the cloned folder
 (kafka-env) $ docker compose up
 ```
 
