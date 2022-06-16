@@ -23,7 +23,7 @@ def main():
     spark = SparkSession \
         .builder \
         .appName("processor") \
-        .config("spark.sql.shuffle.partitions", 4) \
+        .config("spark.sql.shuffle.partitions", 15) \
         .config("spark.sql.streaming.checkpointLocation", "/tmp/spark-checkpoint") \
         .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2") \
         .getOrCreate()
@@ -205,7 +205,7 @@ def read_transactions(args, spark: SparkSession):
                    "job",
                    "city_pop"
                )
-               .withWatermark("ts", "1 MINUTE")
+               .withWatermark("ts", "2 MINUTE")
                )
 
     print("'changes' schema:")
