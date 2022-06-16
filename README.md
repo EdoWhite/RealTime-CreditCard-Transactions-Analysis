@@ -4,7 +4,7 @@
 
 ## Overview
 
-The purpose of this project is to build a system that analyzes transaction data in the form of a stream and proposes a summary dashboard of the analysis conducted. The analysis is performed using the Apache Spark framework, in particular the Spark Streaming extension. To manage the streams we use Apache Kafka and in order to build the final dashboard we combine Boostrap, Apache ECharts and RxJS.
+The purpose of this project is to build a system that analyzes transaction data in the form of a stream and proposes a summary dashboard of the analysis conducted. The analysis is performed using the Apache Spark framework, in particular the Spark Streaming extension. To manage the streams we use Apache Kafka and in order to build the final dashboard we combine Boostrap, Apache ECharts and RxJS. More details in the `REPORT.pdf` file.
 
 The following image depicts the system architecture and all the components:
 
